@@ -10,7 +10,9 @@ defmodule Todo.Web.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json, Absinthe.Plug.Parser],
+      json_decoder: Poison
   end
 
   scope "/", Todo.Web do
@@ -19,8 +21,17 @@ defmodule Todo.Web.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Todo.Web do
-  #   pipe_through :api
-  # end
+  scope "/graphql" do
+    pipe_through :api
+
+    forward "/", Absinthe.Plug,
+      schema: Todo.GraphQL.Schema
+  end
+
+  scope "/graphiql" do
+    pipe_through :api
+
+    forward "/", Absinthe.Plug.GraphiQL,
+      schema: Todo.GraphQL.Schema
+  end
 end
