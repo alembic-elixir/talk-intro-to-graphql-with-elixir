@@ -8,7 +8,12 @@ defmodule Todo.TodoContext do
 
   alias Todo.TodoItem 
 
-  def all do
+  def all_todo_items do
     TodoItem |> Repo.all
+  end
+
+  def create_todo_item(args, _) do
+    todo_item = %TodoItem{description: args.description}
+    {:ok, todo_item |> Repo.insert!}
   end
 end

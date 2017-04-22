@@ -2,6 +2,7 @@ defmodule Todo.GraphQL.Schema do
   use Absinthe.Schema
 
   alias Todo.TodoItem
+  alias Todo.TodoContext
 
   # TODO do we need this line?
   import_types Absinthe.Type.Custom
@@ -10,7 +11,7 @@ defmodule Todo.GraphQL.Schema do
     @desc "Get the list of todo items"
     field :todo_items, type: list_of(:todo_item) do
       resolve fn _, _ ->
-        {:ok, TodoItem.all}
+        {:ok, TodoContext.all_todo_items}
       end
     end
   end
@@ -25,6 +26,16 @@ defmodule Todo.GraphQL.Schema do
 
     @desc "The creation time of the todo item"
     field :inserted_at, :date
+  end
+
+  mutation do
+    @desc "Create a todo item"
+    field :create_todo_item, type: :todo_item do
+      @desc "The description of the todo item"
+      arg :description, non_null(:string)
+
+      resolve &TodoContext.create_todo_item/2
+    end
   end
 end
 
