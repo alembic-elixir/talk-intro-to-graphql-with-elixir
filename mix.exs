@@ -37,7 +37,9 @@ defmodule Todo.Mixfile do
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
      {:absinthe, "~> 1.3.0-rc.0"},
-     {:absinthe_plug, "~> 1.3.0-rc.0"}
+     {:absinthe_plug, "~> 1.3.0-rc.0"},
+     {:timex, "~> 3.1"},
+     {:timex_ecto, "~> 3.1.1"}
     ]
   end
 
