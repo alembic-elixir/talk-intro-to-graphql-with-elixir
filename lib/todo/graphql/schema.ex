@@ -27,6 +27,7 @@ defmodule Todo.GraphQL.Schema do
     field :inserted_at, :date
   end
 
+  @desc "mutations to support CRUD operations on todo items"
   mutation do
     @desc "Create a todo item"
     field :create_todo_item, type: :todo_item do
