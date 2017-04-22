@@ -3,7 +3,6 @@ defmodule Todo.GraphQL.Schema do
 
   alias Todo.TodoContext
 
-  # TODO do we need this line?
   import_types Absinthe.Type.Custom
 
   query do
