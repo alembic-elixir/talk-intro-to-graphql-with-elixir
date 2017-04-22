@@ -1,7 +1,6 @@
 defmodule Todo.GraphQL.Schema do
   use Absinthe.Schema
 
-  alias Todo.TodoItem
   alias Todo.TodoContext
 
   # TODO do we need this line?
