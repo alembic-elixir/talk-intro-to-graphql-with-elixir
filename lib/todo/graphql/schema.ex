@@ -16,6 +16,9 @@ defmodule Todo.GraphQL.Schema do
 
   @desc "A todo item"
   object :todo_item do
+    @desc "The iD of the todo item"
+    field :id, :integer
+
     @desc "The description of the todo item"
     field :description, :string
 
@@ -34,6 +37,14 @@ defmodule Todo.GraphQL.Schema do
       arg :description, non_null(:string)
 
       resolve &TodoContext.create_todo_item/2
+    end
+
+    @desc "Complete a todo item"
+    field :complete_todo_item, type: :todo_item do
+      @desc "The iD of the todo item"
+      arg :id, non_null(:integer)
+
+      resolve &TodoContext.complete_todo_item/2
     end
   end
 end

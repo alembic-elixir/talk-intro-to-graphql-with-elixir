@@ -16,4 +16,9 @@ defmodule Todo.TodoContext do
     todo_item = %TodoItem{description: args.description}
     {:ok, todo_item |> Repo.insert!}
   end
+
+  def complete_todo_item(args, _) do
+    todo_item = TodoItem |> where(id: ^args.id) |> Repo.one!
+    {:ok, todo_item |> change(completed: true) |> Repo.update! }
+  end
 end
