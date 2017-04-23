@@ -46,6 +46,14 @@ defmodule Todo.GraphQL.Schema do
 
       resolve &TodoContext.complete_todo_item/2
     end
+
+    @desc "Delete a todo item"
+    field :delete_todo_item, type: :todo_item do
+      @desc "The iD of the todo item"
+      arg :id, non_null(:integer)
+
+      resolve &TodoContext.delete_todo_item/2
+    end
   end
 end
 

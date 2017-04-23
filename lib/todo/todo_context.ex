@@ -21,4 +21,11 @@ defmodule Todo.TodoContext do
     todo_item = TodoItem |> where(id: ^args.id) |> Repo.one!
     {:ok, todo_item |> change(completed: true) |> Repo.update! }
   end
+
+  def delete_todo_item(args, _) do
+    todo_item = TodoItem |> where(id: ^args.id) |> Repo.one!
+    todo_item |> Repo.delete!
+     
+    {:ok, todo_item }
+  end
 end
