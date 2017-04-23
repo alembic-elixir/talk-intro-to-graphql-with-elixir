@@ -14,18 +14,22 @@ defmodule Todo.TodoContext do
 
   def create_todo_item(args, _) do
     todo_item = %TodoItem{description: args.description}
-    {:ok, todo_item |> Repo.insert!}
+    todo_item |> Repo.insert
   end
 
   def complete_todo_item(args, _) do
-    todo_item = TodoItem |> where(id: ^args.id) |> Repo.one!
-    {:ok, todo_item |> change(completed: true) |> Repo.update! }
+    todo_item = TodoItem |> where(id: ^args.id) |> Repo.one
+    case todo_item do
+      nil -> { :error, "not found" }
+      todo_item -> todo_item |> change(completed: true) |> Repo.update
+    end
   end
 
   def delete_todo_item(args, _) do
-    todo_item = TodoItem |> where(id: ^args.id) |> Repo.one!
-    todo_item |> Repo.delete!
-     
-    {:ok, todo_item }
+    todo_item = TodoItem |> where(id: ^args.id) |> Repo.one
+    case todo_item do
+      nil -> { :error, "not found" }
+      todo_item -> todo_item |> Repo.delete
+    end
   end
 end
